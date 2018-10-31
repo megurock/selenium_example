@@ -1,0 +1,44 @@
+extend ./partial/_layout
+
+mixin renderSex(selextedVal)
+  - list = [{ val: 'man', text: '男性' }, { val: 'woman', text: '女性' }]
+  each item in list
+    label.pure-radio(for= item.val)
+      input(id= item.val type="radio" name="sex" value= item.val checked= (selextedVal === item.val))
+      |  #{item.text}
+
+mixin renderLanguage(selectedList) 
+  - var list = [{ val: 'js', text: 'JavaScript' }, { val: 'python', text: 'Python' }, { val: 'ruby', text: 'Ruby' }, { val: 'php', text: 'PHP' }]
+  each item in list
+    label.pure-checkbox
+      input(type="checkbox" name="language" value= item.val checked= selectedList.some((selectedItem) => selectedItem === item.val) ) 
+      |  #{item.text}
+
+mixin renderLevel(selectedVal)
+  - var list = [{ val: 'unexperienced', text: '未経験' }, { val: 'junior', text: '初級' }, { val: 'intermediate', text: '中級' }, { val: 'senior', text: '上級' }]
+  select.pure-u-1-1(name="level")
+    each item in list
+      option(value= item.val selected= (selectedVal === item.val))= item.text
+
+block body
+  main
+    h1 [編集画面] - <span id="id">#{id}</span>
+    if (model)
+      form#edit.pure-form.pure-form-stacked(method="post")
+        fieldset
+          legend 名前
+          input#name.pure-u-1-1(name="name" value= model.name)
+        fieldset
+          legend 性別
+          +renderSex(model.sex)
+        fieldset
+          legend 言語
+          +renderLanguage([].concat(model.language))
+        fieldset
+          legend 熟練度
+          +renderLevel(model.level)
+        button#save.pure-button.pure-button-primary.pure-u-1-1(type="submit") 保存
+        script(src="/js/edit.js")
+    else 
+      p 該当のページが見つかりませんでした。
+      a.pure-button.pure-button-primary(href="javascript:history.back();") 戻る

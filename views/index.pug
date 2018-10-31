@@ -1,0 +1,15 @@
+extend ./partial/_layout
+block body
+  main
+    form.pure-form.pure-form-aligned(action="/" method="post")
+      fieldset 
+        legend= title
+        .pure-control-group
+          label(for="username") ID
+          input#user-name(type="text" name="username")
+        .pure-control-group
+          label(for="password") パスワード
+          input#password(type="password" name="password")
+        .pure-control-group
+          label
+          button.pure-button.pure-button-primary(type="submit") ログイン

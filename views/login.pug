@@ -1,0 +1,10 @@
+extend ./partial/_layout
+block body
+  main
+    p#message= message
+    if (isLoginSuccess) 
+      a.pure-button.pure-button-primary(href="/search") 検索画面へ
+    else
+      a.pure-button.pure-button-primary(href="javascript:history.back();") 戻る
+            
+   

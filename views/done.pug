@@ -1,0 +1,39 @@
+extend ./partial/_layout
+block body
+  main
+    h1 [編集完了] - <span id="id">#{id}</span>
+    if (model)
+      form#edit.pure-form.pure-form-stacked(action=`/edit/${id}` method="post")
+        fieldset
+          legend 氏名
+          p #{model.name}
+        fieldset
+          legend 性別
+          case model.sex
+            when 'man'
+              p 男性
+            when 'woman'
+              p 女性
+            default
+              p 未設定
+        fieldset  
+          legend 言語
+          p= (model.language !== undefined) ? [].concat(model.language).join('、') : '未設定'
+        fieldset
+          legend 熟練度
+          case model.level
+            when 'newbie'
+              p 未経験
+            when 'beginner'
+              p 初級
+            when 'intermediate'
+              p 中級
+            when 'senior'
+              p 上級
+            default
+              p 未設定
+        p: a.pure-button.pure-button-primary.pure-u-1-1(href="/search") ページ検索
+        p: input.pure-button.pure-u-1-1(type="submit" value="戻る")
+    else
+      p 該当のページが見つかりませんでした。
+      a.pure-button.pure-button-primary(href="/search") ページ検索
