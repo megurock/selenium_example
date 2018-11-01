@@ -1,5 +1,6 @@
 const xlsx = require('xlsx')
 const { Builder, By, Key, until } = require('selenium-webdriver')
+// const chrome = require('selenium-webdriver/chrome')　ヘッドレスモードで起動する場合は必要
 const config = require('./config.js')
 const fs = require('fs-extra')
 const path = require('path')
@@ -30,7 +31,11 @@ function getPages(pathToExcel) {
 async function createDriver(option = { width: 480, height: 720 }) {
   return new Promise(async resolve => {
     // Chromeドライバを起動
-    const driver = await new Builder().forBrowser('chrome').build()
+    const driver = await new Builder()
+                    .forBrowser('chrome')
+                    // ヘッドレスモードで起動する場合は、以下をアンコメント
+                    //.setChromeOptions(new chrome.Options().headless())
+                    .build()
     // ウィンドウサイズを指定してブラウザを開く
     await driver.manage().window().setRect(option)
     resolve(driver)
